@@ -1,0 +1,428 @@
+/* Base Styles */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dashboard-header {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+  margin: 0;
+}
+
+.header-subtitle {
+  color: #4b5563;
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+/* Stat Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.lecturer-stats, .student-stats {
+  grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 768px) {
+  .lecturer-stats, .student-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.stat-card-content {
+  display: flex;
+  align-items: center;
+}
+
+.stat-icon {
+  padding: 0.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-blue {
+  background-color: #3b82f6;
+}
+
+.bg-green {
+  background-color: #10b981;
+}
+
+.bg-purple {
+  background-color: #8b5cf6;
+}
+
+.bg-orange {
+  background-color: #f97316;
+}
+
+.icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: white;
+}
+
+.stat-text {
+  margin-left: 1rem;
+}
+
+.stat-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin: 0;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+  margin: 0;
+}
+
+.stat-subtitle {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Dashboard Cards */
+.dashboard-space {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.dashboard-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+/* Subject Distribution */
+.subject-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.subject-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subject-name {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.subject-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progress-bar {
+  width: 6rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.25rem;
+}
+
+.progress-fill {
+  background-color: #3b82f6;
+  height: 0.25rem;
+  border-radius: 9999px;
+}
+
+.student-count {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* Marks List */
+.marks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mark-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.mark-item:last-child {
+  border-bottom: none;
+}
+
+.student-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin: 0;
+}
+
+.subject-name {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.mark-details {
+  text-align: right;
+}
+
+.mark-score {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin: 0;
+}
+
+.mark-grade {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.grade-a {
+  color: #10b981;
+}
+
+.grade-b {
+  color: #3b82f6;
+}
+
+.grade-c {
+  color: #d97706;
+}
+
+.grade-d {
+  color: #ef4444;
+}
+
+/* Schedule Items */
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.bg-green {
+  background-color: #ecfdf5;
+}
+
+.bg-blue {
+  background-color: #eff6ff;
+}
+
+.schedule-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.schedule-icon.bg-green {
+  color: #10b981;
+}
+
+.schedule-icon.bg-blue {
+  color: #3b82f6;
+}
+
+.schedule-class {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin: 0;
+}
+
+.schedule-time {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Grade Distribution */
+.grade-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.grade-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grade-label {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.grade-percent {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Student Dashboard */
+.lecture-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.lecture-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #eff6ff;
+}
+
+.lecture-subject {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin: 0;
+}
+
+.lecture-details {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.lecture-time {
+  text-align: right;
+}
+
+.lecture-day {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.lecture-hour {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Grades List */
+.grades-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.grade-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.grade-item:last-child {
+  border-bottom: none;
+}
+
+.grade-subject {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin: 0;
+}
+
+.grade-exam {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.grade-score {
+  text-align: right;
+}
+
+.grade-mark {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin: 0;
+}
+
+.grade-letter {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 0;
+}

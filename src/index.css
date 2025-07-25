@@ -1,0 +1,85 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --card-bg: #f4f4f5;
+  --border-color: #e5e7eb;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --primary: #60a5fa;
+  --primary-hover: #3b82f6;
+  --header-bg: rgba(17, 24, 39, 0.95);
+  --card-bg: #1f2937;
+  --border-color: #374151;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground);
+  background-color: var(--background);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, 
+              border-color 0.3s ease, 
+              color 0.3s ease, 
+              box-shadow 0.3s ease;
+}
+
+/* Animation for drawing stroke */
+@keyframes draw {
+  0% {
+    stroke-dasharray: 0, 100;
+  }
+  100% {
+    stroke-dasharray: 100, 0;
+  }
+}
+
+.animate-draw path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw 3s ease forwards;
+}
+
+/* Fade in and out animation */
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.animate-fadeinout {
+  animation: fadeinout 4s ease-in-out forwards;
+}
+
+/* Animation for tick drawing */
+.tick-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-tick 3s ease forwards;
+}
+
+@keyframes draw-tick {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
