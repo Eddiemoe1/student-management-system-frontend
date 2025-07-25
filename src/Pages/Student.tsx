@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import './Student.css';
 
-// Mock data - replace with actual API calls
+// My Mock data
 const mockStudents: Student[] = [
   {
     id: '1',
