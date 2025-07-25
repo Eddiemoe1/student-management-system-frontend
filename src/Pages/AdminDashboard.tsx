@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import './Dashboard.css';
 
-// Mock data - replace with actual API calls
+//My Mock data
 const mockStats = {
   totalStudents: 1247,
   totalStaff: 45,

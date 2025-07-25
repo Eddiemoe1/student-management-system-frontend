@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import './Marks.css';
 
+//My Mock data
 const mockMarks: Mark[] = [
   {
     id: '1',
