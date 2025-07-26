@@ -10,7 +10,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+  margin-top: -4px;
 }
 
 .students-subtitle {
@@ -20,7 +22,7 @@
 }
 
 .students-header-action {
-  margin-top: 16px;
+  margin-top: 1px;
 }
 
 /* Buttons */
@@ -189,7 +191,7 @@
   text-align: left;
   font-size: 12px;
   font-weight: 500;
-  color: #6b7280;
+  color: #0d0d0d;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -197,7 +199,7 @@
 .students-table td {
   padding: 16px 24px;
   font-size: 14px;
-  color: #374151;
+  color: #060606;
   border-top: 1px solid #e5e7eb;
 }
 

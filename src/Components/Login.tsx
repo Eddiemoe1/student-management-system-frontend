@@ -59,16 +59,8 @@ export const Login: React.FC = () => {
             Sign in to your account
           </p>
         </div>
-
-        <div className="demo-accounts">
-          <h3 className="demo-title">Demo Accounts:</h3>
-          <div className="demo-list">
-            <p><strong>Admin:</strong> admin@school.com / password</p>
-            <p><strong>Lecturer:</strong> lecturer@school.com / password</p>
-            <p><strong>Student:</strong> student@school.com / password</p>
-          </div>
-        </div>
-
+        
+        
         <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-fields">
             <div className="form-group">

@@ -227,3 +227,121 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* User profile dropdown styles */
+.dropdown-chevron {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 8px 0;
+  z-index: 50;
+  min-width: 200px;
+}
+
+.dropdown-logout-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 16px;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-logout-button:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.user-profile:hover {
+  background-color: #f3f4f6;
+}
+
+.user-controls {
+  position: relative;
+}
+
+/* User profile dropdown styles */
+.dropdown-chevron {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 8px 0;
+  z-index: 50;
+  min-width: 200px;
+}
+
+.dropdown-logout-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 16px;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-logout-button:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.user-profile:hover {
+  background-color: #f3f4f6;
+}
+
+.user-controls {
+  position: relative;
+}
+
+.dropdown-user-role {
+  padding: 8px 16px;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+}

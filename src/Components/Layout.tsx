@@ -1,150 +1,170 @@
 import React, { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
-import { User, BookOpen, Lock, Mail } from 'lucide-react';
-import './login.css';
+import {
+  LayoutDashboard,
+  Users,
+  GraduationCap,
+  BookMarked,
+  Calendar,
+  UserCheck,
+  Menu,
+  X,
+  LogOut,
+  User,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
+import './layout.css';
 
-const schema = yup.object({
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-});
+const navigation = [
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, roles: ['admin', 'lecturer', 'student'] },
+  { name: 'Students', href: '/students', icon: Users, roles: ['admin', 'lecturer'] },
+  { name: 'Staff', href: '/staff', icon: UserCheck, roles: ['admin'] },
+  { name: 'Subjects', href: '/subjects', icon: BookMarked, roles: ['admin', 'lecturer'] },
+  { name: 'Lectures', href: '/lectures', icon: Calendar, roles: ['admin', 'lecturer', 'student'] },
+  { name: 'Marks', href: '/marks', icon: GraduationCap, roles: ['admin', 'lecturer', 'student'] },
+];
 
-interface LoginForm {
-  email: string;
-  password: string;
-}
-
-export const Login: React.FC = () => {
-  const { login, isAuthenticated, isLoading } = useAuth();
+export const Layout: React.FC = () => {
+  const { user, logout } = useAuth();
   const location = useLocation();
-  const [loginError, setLoginError] = useState<string>('');
-  
-  const from = location.state?.from?.pathname || '/dashboard';
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginForm>({
-    resolver: yupResolver(schema),
-  });
-
-  if (isAuthenticated) {
-    return <Navigate to={from} replace />;
-  }
-
-  const onSubmit = async (data: LoginForm) => {
-    try {
-      setLoginError('');
-      await login(data.email, data.password);
-    } catch (error) {
-      setLoginError('Invalid email or password');
-    }
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
+  const filteredNavigation = navigation.filter(item => 
+    user && item.roles.includes(user.role)
+  );
+
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <div className="login-header">
-          <div className="login-icon">
-            <BookOpen className="logo-icon" />
-          </div>
-          <h2 className="login-title">
-            Student Management System
-          </h2>
-          <p className="login-subtitle">
-            Sign in to your account
-          </p>
-        </div>
-
-        <div className="demo-accounts">
-          <h3 className="demo-title">Demo Accounts:</h3>
-          <div className="demo-list">
-            <p><strong>Admin:</strong> admin@school.com / password</p>
-            <p><strong>Lecturer:</strong> lecturer@school.com / password</p>
-            <p><strong>Student:</strong> student@school.com / password</p>
+    <div className="layout-container">
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div className="mobile-sidebar-overlay">
+          <div className="mobile-sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
+          <div className="mobile-sidebar">
+            <div className="mobile-sidebar-close">
+              <button
+                type="button"
+                className="mobile-sidebar-close-button"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <X className="mobile-sidebar-close-icon" />
+              </button>
+            </div>
+            <SidebarContent filteredNavigation={filteredNavigation} currentPath={location.pathname} />
           </div>
         </div>
+      )}
 
-        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-fields">
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">
-                Email Address
-              </label>
-              <div className="input-container">
-                <div className="input-icon">
-                  <Mail className="icon" />
-                </div>
-                <input
-                  {...register('email')}
-                  type="email"
-                  autoComplete="email"
-                  className="form-input"
-                  placeholder="Enter your email"
-                />
-              </div>
-              {errors.email && (
-                <p className="error-message">{errors.email.message}</p>
-              )}
+      {/* Desktop sidebar */}
+      <div className="desktop-sidebar">
+        <SidebarContent filteredNavigation={filteredNavigation} currentPath={location.pathname} />
+      </div>
+
+      {/* Main content */}
+      <div className="main-content">
+        {/* Top bar */}
+        <div className="top-bar">
+          <div className="top-bar-inner">
+            <div className="top-bar-left">
+              <button
+                type="button"
+                className="mobile-menu-button"
+                onClick={() => setSidebarOpen(true)}
+              >
+                <Menu className="mobile-menu-icon" />
+              </button>
+              <h1 className="app-title">
+                STUDENT MANAGEMENT SYSTEM
+              </h1>
             </div>
-
-            <div className="form-group">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <div className="input-container">
-                <div className="input-icon">
-                  <Lock className="icon" />
+            
+            <div className="user-controls">
+              <div 
+                className="user-profile" 
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+              >
+                <div className="user-avatar">
+                  <User className="user-avatar-icon" />
                 </div>
-                <input
-                  {...register('password')}
-                  type="password"
-                  autoComplete="current-password"
-                  className="form-input"
-                  placeholder="Enter your password"
-                />
+                <div className="user-info">
+                  <p className="user-name">
+                    {user?.firstName} {user?.lastName}
+                  </p>
+                </div>
+                {profileDropdownOpen ? (
+                  <ChevronUp className="dropdown-chevron" />
+                ) : (
+                  <ChevronDown className="dropdown-chevron" />
+                )}
               </div>
-              {errors.password && (
-                <p className="error-message">{errors.password.message}</p>
+              
+              {profileDropdownOpen && (
+                <div className="profile-dropdown">
+                  <div className="dropdown-user-role">
+                    Role: {user?.role}
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="dropdown-logout-button"
+                  >
+                    <LogOut className="logout-icon" />
+                    <span className="logout-text">Logout</span>
+                  </button>
+                </div>
               )}
             </div>
           </div>
+        </div>
 
-          {loginError && (
-            <div className="error-alert">
-              <p className="error-text">{loginError}</p>
-            </div>
-          )}
-
-          <div className="form-submit">
-            <button
-              type="submit"
-              disabled={isSubmitting || isLoading}
-              className="submit-button"
-            >
-              {isSubmitting || isLoading ? (
-                <>
-                  <svg className="spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="spinner-circle" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="spinner-path" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Signing in...
-                </>
-              ) : (
-                <>
-                  <User className="user-icon" />
-                  Sign in
-                </>
-              )}
-            </button>
+        {/* Page content */}
+        <main className="page-content">
+          <div className="content-container">
+            <Outlet />
           </div>
-        </form>
+        </main>
       </div>
     </div>
   );
 };
-export default Login;
+
+interface SidebarContentProps {
+  filteredNavigation: any[];
+  currentPath: string;
+}
+
+const SidebarContent: React.FC<SidebarContentProps> = ({ filteredNavigation, currentPath }) => {
+  return (
+    <div className="sidebar-content">
+      <div className="sidebar-header">
+      </div>
+      <div className="sidebar-nav-container">
+        <nav className="sidebar-nav">
+          {filteredNavigation.map((item) => {
+            const isActive = currentPath === item.href;
+            return (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`nav-link ${isActive ? 'active' : ''}`}
+              >
+                <item.icon
+                  className={`nav-icon ${isActive ? 'active-icon' : ''}`}
+                />
+                {item.name}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+    </div>
+  );
+};
+export default Layout;

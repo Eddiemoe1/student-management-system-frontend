@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         id: '1',
         email,
         firstName: 'Ednah',
-        lastName: 'Moraa',
+        lastName: 'moe',
         role: email.includes('admin') ? 'admin' : email.includes('lecturer') ? 'lecturer' : 'student',
       };
       

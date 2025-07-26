@@ -20,8 +20,8 @@ const mockStats = {
   upcomingLectures: 12,
   recentMarks: [
     { id: '1', studentName: 'Eddy Moe', subjectName: 'Mathematics', marks: 85, totalMarks: 100, grade: 'A' },
-    { id: '2', studentName: 'Jane Cathy', subjectName: 'Physics', marks: 78, totalMarks: 100, grade: 'B+' },
-    { id: '3', studentName: 'Lydia Jem', subjectName: 'Chemistry', marks: 92, totalMarks: 100, grade: 'A+' },
+    { id: '2', studentName: 'Jane Cathy', subjectName: 'Physics', marks: 78, totalMarks: 100, grade: 'B' },
+    { id: '3', studentName: 'Lydia Jem', subjectName: 'Chemistry', marks: 92, totalMarks: 100, grade: 'A' },
   ],
   subjectDistribution: [
     { subject: 'Mathematics', students: 45 },
@@ -89,9 +89,23 @@ export const Dashboard: React.FC = () => {
           title="Lectures"
           value={mockStats.totalLectures}
           icon={Calendar}
-          color="bg-orange"
+          color="bg-green"
           subtitle={`${mockStats.upcomingLectures} upcoming`}
         />
+        <StatCard
+          title="Average Marks"
+          value={mockStats.recentMarks.reduce((sum, mark) => sum + mark.marks, 0) / mockStats.recentMarks.length}
+          icon={TrendingUp}
+          color="bg-blue"
+          subtitle="Average of recent marks"
+          />
+        <StatCard
+          title="Active Students"
+          value={mockStats.activeStudents}
+          icon={Users}
+          color="bg-orange"
+          />
+
       </div>
 
       {/* Charts and Recent Activity */}
