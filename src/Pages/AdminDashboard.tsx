@@ -19,15 +19,15 @@ const mockStats = {
   activeStudents: 1189,
   upcomingLectures: 12,
   recentMarks: [
-    { id: '1', studentName: 'Eddy Moe', subjectName: 'Mathematics', marks: 85, totalMarks: 100, grade: 'A' },
-    { id: '2', studentName: 'Jane Cathy', subjectName: 'Physics', marks: 78, totalMarks: 100, grade: 'B' },
-    { id: '3', studentName: 'Lydia Jem', subjectName: 'Chemistry', marks: 92, totalMarks: 100, grade: 'A' },
+    { id: '1', studentName: 'Edna Moe', subjectName: 'BCS 374', marks: 85, totalMarks: 100, grade: 'A' },
+    { id: '2', studentName: 'Jane Cathy', subjectName: 'BCS 367', marks: 78, totalMarks: 100, grade: 'B' },
+    { id: '3', studentName: 'Lydia Jem', subjectName: 'BCS 321', marks: 92, totalMarks: 100, grade: 'A' },
   ],
   subjectDistribution: [
-    { subject: 'Mathematics', students: 45 },
-    { subject: 'Physics', students: 38 },
-    { subject: 'Chemistry', students: 42 },
-    { subject: 'Biology', students: 35 },
+    { subject: 'BCS 321', students: 45 },
+    { subject: 'BCS 324', students: 38 },
+    { subject: 'BCS 367', students: 42 },
+    { subject: 'BCS 374', students: 35 },
   ]
 };
 
@@ -188,14 +188,14 @@ export const Dashboard: React.FC = () => {
             <div className="schedule-item bg-green">
               <Clock className="schedule-icon" />
               <div>
-                <p className="schedule-class">Mathematics - Room 101</p>
+                <p className="schedule-class">BCS 321 - Room 101</p>
                 <p className="schedule-time">9:00 AM - 10:30 AM</p>
               </div>
             </div>
             <div className="schedule-item bg-blue">
               <Clock className="schedule-icon" />
               <div>
-                <p className="schedule-class">Physics - Room 205</p>
+                <p className="schedule-class">BCS 374 - Room 205</p>
                 <p className="schedule-time">2:00 PM - 3:30 PM</p>
               </div>
             </div>
@@ -207,19 +207,19 @@ export const Dashboard: React.FC = () => {
           <div className="grade-list">
             <div className="grade-item">
               <span className="grade-label">A Grade</span>
-              <span className="grade-percent grade-a">25%</span>
+              <span className="grade-percent grade-a">70%</span>
             </div>
             <div className="grade-item">
               <span className="grade-label">B Grade</span>
-              <span className="grade-percent grade-b">40%</span>
+              <span className="grade-percent grade-b">60%</span>
             </div>
             <div className="grade-item">
               <span className="grade-label">C Grade</span>
-              <span className="grade-percent grade-c">25%</span>
+              <span className="grade-percent grade-c">55%</span>
             </div>
             <div className="grade-item">
               <span className="grade-label">Below C</span>
-              <span className="grade-percent grade-d">10%</span>
+              <span className="grade-percent grade-d">40%</span>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@ export const Dashboard: React.FC = () => {
           <div className="lecture-list">
             <div className="lecture-item">
               <div>
-                <p className="lecture-subject">Mathematics</p>
+                <p className="lecture-subject">BCS 367</p>
                 <p className="lecture-details">Room 101 • Prof. Johnson</p>
               </div>
               <div className="lecture-time">
@@ -267,7 +267,7 @@ export const Dashboard: React.FC = () => {
             </div>
             <div className="lecture-item">
               <div>
-                <p className="lecture-subject">Physics</p>
+                <p className="lecture-subject">BCS 324</p>
                 <p className="lecture-details">Room 205 • Dr. Smith</p>
               </div>
               <div className="lecture-time">
