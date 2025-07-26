@@ -21,7 +21,7 @@ const mockMarks: Mark[] = [
   {
     id: '1',
     studentId: 'STU001',
-    studentName: 'Ednah Moraa',
+    studentName: 'Edna Moraa',
     subjectId: 'SUB001',
     subjectName: 'Calculus I',
     examType: 'midterm',
@@ -36,9 +36,9 @@ const mockMarks: Mark[] = [
   {
     id: '2',
     studentId: 'STU002',
-    studentName: 'Jane Smith',
-    subjectId: 'SUB002',
-    subjectName: 'General Physics',
+    studentName: 'phoebe',
+    subjectId: 'BCS 324',
+    subjectName: 'Digital Electronics',
     examType: 'final',
     marks: 78,
     totalMarks: 100,
@@ -51,9 +51,9 @@ const mockMarks: Mark[] = [
   {
     id: '3',
     studentId: 'STU003',
-    studentName: 'Mike Johnson',
+    studentName: 'Mike ',
     subjectId: 'SUB003',
-    subjectName: 'General Chemistry',
+    subjectName: 'Software Engineering',
     examType: 'assignment',
     marks: 92,
     totalMarks: 100,
