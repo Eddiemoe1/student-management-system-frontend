@@ -15,6 +15,7 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
       <Route path="/" element={<Layout />}>
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="students" element={<Students />} />
@@ -22,7 +23,6 @@ function App() {
         <Route path="lectures" element={<Lecturer />} />
         <Route path="marks" element={<Marks />} />
         <Route path="subjects" element={<Subjects />} />
-        <Route path="signup" element={<Signup />} />
       </Route>
     </Routes>
   );
