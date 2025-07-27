@@ -402,7 +402,8 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
       dateOfBirth: '',
       address: '',
       enrollmentDate: new Date().toISOString().split('T')[0],
-      status: 'active'
+      status: 'active',
+      studentId: `STU${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`
     }
   );
 
