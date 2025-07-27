@@ -19,9 +19,9 @@ const mockStats = {
   activeStudents: 1189,
   upcomingLectures: 12,
   recentMarks: [
-    { id: '1', studentName: 'Edna Moe', subjectName: 'BCS 374', marks: 85, totalMarks: 100, grade: 'A' },
+    { id: '1', studentName: 'Ednah Moe', subjectName: 'BCS 374', marks: 85, totalMarks: 100, grade: 'A' },
     { id: '2', studentName: 'Jane Cathy', subjectName: 'BCS 367', marks: 78, totalMarks: 100, grade: 'B' },
-    { id: '3', studentName: 'Lydia Jem', subjectName: 'BCS 321', marks: 92, totalMarks: 100, grade: 'A' },
+    { id: '3', studentName: 'Lydia Rose', subjectName: 'BCS 321', marks: 92, totalMarks: 100, grade: 'A' },
   ],
   subjectDistribution: [
     { subject: 'BCS 321', students: 45 },
