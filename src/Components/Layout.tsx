@@ -91,7 +91,7 @@ export const Layout: React.FC = () => {
             
             <div className="user-controls">
               <div 
-                className="user-profile"                 
+                className="user-profile" 
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
               >
                 <div className="user-avatar">

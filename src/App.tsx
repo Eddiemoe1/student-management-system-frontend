@@ -9,6 +9,7 @@ import {Marks} from './Pages/Marks';
 import Staff from './Pages/Staff';
 import {Students} from './Pages/Student';
 import  {Subjects} from './Pages/Subject';
+import Signup from './Components/Signup';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="lectures" element={<Lecturer />} />
         <Route path="marks" element={<Marks />} />
         <Route path="subjects" element={<Subjects />} />
+        <Route path="signup" element={<Signup />} />
       </Route>
     </Routes>
   );

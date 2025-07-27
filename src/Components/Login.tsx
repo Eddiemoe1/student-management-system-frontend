@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '../Contexts/AuthContext';
-import { User, BookOpen, Lock, Mail } from 'lucide-react';
+import { User, BookOpen, Lock, Mail, UserPlus } from 'lucide-react';
 import './login.css';
 
 const schema = yup.object({
@@ -59,7 +59,6 @@ export const Login: React.FC = () => {
             Sign in to your account
           </p>
         </div>
-        
         
         <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-fields">
@@ -133,10 +132,19 @@ export const Login: React.FC = () => {
                 </>
               )}
             </button>
+        
+            <div className="signup-prompt">
+              <p className="signup-text">Don't have an account?</p>
+              <Link to="/signup" className="signup-button">
+                <UserPlus className="signup-icon" />
+                Sign up
+              </Link>
+            </div>
           </div>
         </form>
       </div>
     </div>
   );
 };
-export default Login; 
+
+export default Login;
