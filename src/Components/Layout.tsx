@@ -82,13 +82,16 @@ export const Layout: React.FC = () => {
                 <Menu className="mobile-menu-icon" />
               </button>
               <h1 className="app-title">
+                <span className="app-title-icon">
+                  <GraduationCap className="app-icon" />
+                </span>
                 STUDENT MANAGEMENT SYSTEM
               </h1>
             </div>
             
             <div className="user-controls">
               <div 
-                className="user-profile" 
+                className="user-profile"                 
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
               >
                 <div className="user-avatar">
