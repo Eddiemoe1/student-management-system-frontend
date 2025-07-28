@@ -80,7 +80,7 @@ export const Layout: React.FC = () => {
                 <Menu className="mobile-menu-icon" />
               </button>
               <div className="app-title-icon">
-                <img src="../assets/green book" alt="Logo" className="logo-image" />
+                <img src="../assets/green book.png" alt="Logo" className="logo-image" />
               </div>
               <h1 className="app-title">
                 STUDENT MANAGEMENT SYSTEM
