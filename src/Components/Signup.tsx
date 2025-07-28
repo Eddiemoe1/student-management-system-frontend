@@ -163,35 +163,6 @@ const SignUp: React.FC = () => {
           </div>
           
           <div className="form-group">
-            <label htmlFor="role">Role</label>
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-            >
-              <option value="student">Student</option>
-              <option value="teacher">Teacher</option>
-              <option value="admin">Administrator</option>
-            </select>
-          </div>
-          
-          {formData.role === 'student' && (
-            <div className="form-group">
-              <label htmlFor="studentId">Student ID</label>
-              <input
-                type="text"
-                id="studentId"
-                name="studentId"
-                value={formData.studentId}
-                onChange={handleChange}
-                className={errors.studentId ? 'error' : ''}
-              />
-              {errors.studentId && <span className="error-message">{errors.studentId}</span>}
-            </div>
-          )}
-          
-          <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
               type="password"

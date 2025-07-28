@@ -1,4 +1,4 @@
-/* Base Styles */
+
 .login-container {
   min-height: 100vh;
   display: flex;
@@ -19,7 +19,6 @@
   gap: 2rem;
 }
 
-/* Header */
 .login-header {
   text-align: center;
 }
@@ -48,34 +47,6 @@
   color: #4b5563;
 }
 
-/* Demo Accounts */
-.demo-accounts {
-  background-color: #eff6ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 0.5rem;
-  padding: 1rem;
-}
-
-.demo-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #1e40af;
-  margin-bottom: 0.5rem;
-}
-
-.demo-list {
-  font-size: 0.75rem;
-  color: #1d4ed8;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.demo-list p {
-  margin: 0;
-}
-
-/* Form */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -162,7 +133,7 @@
   margin: 0;
 }
 
-/* Submit Button */
+
 .form-submit {
   width: 100%;
 }
@@ -170,7 +141,7 @@
 .submit-button {
   width: 100%;
   padding: 14px;
-  background-color: var(--primary-color);
+  background-color: rgb(2, 141, 97);
   color: white;
   border: none;
   border-radius: 5px;
@@ -182,7 +153,7 @@
 }
 
 .submit-button:hover {
-  background-color: #2a385f;
+  background-color: #2a5f55;
 }
 
 .submit-button:focus {
@@ -201,7 +172,6 @@
   margin-right: 0.5rem;
 }
 
-/* Spinner */
 .spinner {
   animation: spin 1s linear infinite;
   height: 1.25rem;
@@ -227,62 +197,6 @@
 }
 
 
-/* User profile dropdown styles */
-.dropdown-chevron {
-  width: 20px;
-  height: 20px;
-  margin-left: 8px;
-  color: #6b7280;
-  transition: transform 0.2s ease;
-}
-
-.profile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  padding: 8px 0;
-  z-index: 50;
-  min-width: 200px;
-}
-
-.dropdown-logout-button {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 8px 16px;
-  color: #6b7280;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-logout-button:hover {
-  background-color: #f3f4f6;
-  color: #1f2937;
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
-}
-
-.user-profile:hover {
-  background-color: #f3f4f6;
-}
-
-.user-controls {
-  position: relative;
-}
-
-/* User profile dropdown styles */
 .dropdown-chevron {
   width: 20px;
   height: 20px;
@@ -343,7 +257,11 @@
   border-bottom: 1px solid #e5e7eb;
   font-size: 0.875rem;
 }
-/* Add these styles to your existing login.css */
+
+.dropdown-logout-button:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
 
 .signup-prompt {
   display: flex;

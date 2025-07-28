@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
+
+
 import {
   LayoutDashboard,
   Users,
@@ -44,7 +46,6 @@ export const Layout: React.FC = () => {
 
   return (
     <div className="layout-container">
-      {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="mobile-sidebar-overlay">
           <div className="mobile-sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
@@ -63,14 +64,11 @@ export const Layout: React.FC = () => {
         </div>
       )}
 
-      {/* Desktop sidebar */}
       <div className="desktop-sidebar">
         <SidebarContent filteredNavigation={filteredNavigation} currentPath={location.pathname} />
       </div>
 
-      {/* Main content */}
       <div className="main-content">
-        {/* Top bar */}
         <div className="top-bar">
           <div className="top-bar-inner">
             <div className="top-bar-left">
@@ -81,10 +79,10 @@ export const Layout: React.FC = () => {
               >
                 <Menu className="mobile-menu-icon" />
               </button>
+              <div className="app-title-icon">
+                <img src="../assets/green book" alt="Logo" className="logo-image" />
+              </div>
               <h1 className="app-title">
-                <span className="app-title-icon">
-                  <GraduationCap className="app-icon" />
-                </span>
                 STUDENT MANAGEMENT SYSTEM
               </h1>
             </div>
@@ -127,7 +125,6 @@ export const Layout: React.FC = () => {
           </div>
         </div>
 
-        {/* Page content */}
         <main className="page-content">
           <div className="content-container">
             <Outlet />

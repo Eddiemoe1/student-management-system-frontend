@@ -185,7 +185,7 @@
 }
 
 .progress-fill {
-  background-color: #3b82f6;
+  background-color: rgb(2, 141, 97);
   height: 0.25rem;
   border-radius: 9999px;
 }
@@ -425,4 +425,46 @@
   font-size: 0.75rem;
   font-weight: 500;
   margin: 0;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: all 0.3s ease; 
+  cursor: pointer;
+  border: 1px solid #e2e8f0; 
+}
+
+.stat-card:hover {
+  transform: translateY(-4px); 
+  border-color: rgb(2, 141, 97); 
+  background-color: rgba(2, 141, 97, 0.05); 
+}
+
+.stat-card:hover .stat-icon.bg-blue { background-color: #2563eb; }
+.stat-card:hover .stat-icon.bg-green { background-color: #0d9c6e; }
+.stat-card:hover .stat-icon.bg-purple { background-color: #7c3aed; }
+.stat-card:hover .stat-icon.bg-orange { background-color: #ea580c; }
+
+.dashboard-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: all 0.3s ease; 
+  cursor: pointer;
+  border: 1px solid #e2e8f0; 
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px); 
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
+  border-color: rgb(2, 141, 97);
+  background-color: rgba(2, 141, 97, 0.05);
+}
+
+.dashboard-card:hover .card-title {
+  color: rgb(2, 141, 97); 
 }
