@@ -219,7 +219,7 @@ font-size:x-large;
 .user-avatar {
   height: 2rem;
   width: 2rem;
-  background-color: #2563eb;
+  background-color: rgb(2, 141, 97);
   border-radius: 9999px;
   display: flex;
   align-items: center;
