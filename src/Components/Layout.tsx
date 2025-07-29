@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
-
+import logo from '../assets/greenbooks.jpg';
 
 import {
   LayoutDashboard,
@@ -23,8 +23,9 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, roles: ['admin', 'lecturer', 'student'] },
   { name: 'Students', href: '/students', icon: Users, roles: ['admin', 'lecturer'] },
   { name: 'Staff', href: '/staff', icon: UserCheck, roles: ['admin'] },
-  { name: 'Subjects', href: '/subjects', icon: BookMarked, roles: ['admin', 'lecturer'] },
+  { name: 'Lecturers', href: '/lecturers', icon: User, roles: ['admin'] },
   { name: 'Lectures', href: '/lectures', icon: Calendar, roles: ['admin', 'lecturer', 'student'] },
+  { name: 'Subjects', href: '/subjects', icon: BookMarked, roles: ['admin', 'lecturer'] },
   { name: 'Marks', href: '/marks', icon: GraduationCap, roles: ['admin', 'lecturer', 'student'] },
 ];
 
@@ -80,7 +81,7 @@ export const Layout: React.FC = () => {
                 <Menu className="mobile-menu-icon" />
               </button>
               <div className="app-title-icon">
-                <img src="../assets/green book.png" alt="Logo" className="logo-image" />
+                <img src={logo} alt="Logo" className="logo-image" />
               </div>
               <h1 className="app-title">
                 STUDENT MANAGEMENT SYSTEM

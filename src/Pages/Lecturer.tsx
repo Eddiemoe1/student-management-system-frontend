@@ -39,7 +39,7 @@ const mockLectures: Lecturer[] = [
     subjectId: 'SUB002',
     subjectName: 'Digital electronics',
     lecturerId: 'LEC002',
-    lecturerName: 'Prof. Sarah',
+    lecturerName: 'Prof. Sarah John',
     title: 'Logic Gates and Circuits',
     description: 'Understanding basic logic gates and their applications in digital circuits',
     date: '2024-01-15',

@@ -10,6 +10,7 @@ import Staff from './Pages/Staff';
 import {Students} from './Pages/Student';
 import  {Subjects} from './Pages/Subject';
 import Signup from './Components/Signup';
+import Lecturers from './Pages/Lecturers';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="lectures" element={<Lecturer />} />
         <Route path="marks" element={<Marks />} />
         <Route path="subjects" element={<Subjects />} />
+        <Route path="lecturers" element={<Lecturers />} />
       </Route>
     </Routes>
   );

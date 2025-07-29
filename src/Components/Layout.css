@@ -182,7 +182,9 @@ font-size:x-large;
 }
 
 .app-title {
-  align-items: start;
+  position: relative;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
   left: 1rem;
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -414,4 +416,9 @@ font-size:x-large;
 
 .nav-icon.active-icon {
   color: #3b82f6;
+}
+.logo-image {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 9999px;
 }

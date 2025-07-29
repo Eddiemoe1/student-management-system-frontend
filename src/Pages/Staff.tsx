@@ -61,7 +61,6 @@ const mockStaff: Staff[] = [
 ];
 
 export const StaffPage: React.FC = () => {
-  const { user } = useAuth();
   const [staff, setStaff] = useState<Staff[]>(mockStaff);
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState<string>('all');
