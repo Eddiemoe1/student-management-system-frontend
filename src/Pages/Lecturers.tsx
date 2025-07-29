@@ -239,6 +239,8 @@ const Lecturers: React.FC = () => {
                         {lecturer.status}
                       </span>
                     </td>
+
+                    
                     <td>
                       <div className="actions">
                         <button 
