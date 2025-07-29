@@ -154,20 +154,18 @@ export const Lectures: React.FC = () => {
         return `${baseClasses} status-default`;
     }
   };
-
   const canModify = user?.role === 'admin' || user?.role === 'lecturer';
-
+  
   // Sort lectures by date and time
   const sortedLectures = filteredLectures.sort((a, b) => {
     const dateA = new Date(`${a.date}T${a.startTime}`);
     const dateB = new Date(`${b.date}T${b.startTime}`);
     return dateA.getTime() - dateB.getTime();
   });
-  
+
 
   return (
     <div className="lectures-container">
-      {/* Header */}
       <div className="lectures-header">
         <div>
           <h1>Lectures</h1>

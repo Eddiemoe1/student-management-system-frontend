@@ -29,15 +29,15 @@ const Lecturers: React.FC = () => {
     },
     {
       id: 'LEC002',
-      name: 'Prof. Sarah Johnson',
-      email: 'sarah.johnson@university.edu',
+      name: 'Dr. Sarah ',
+      email: 'sarah@university.edu',
       department: 'Mathematics',
       courses: ['Calculus I', 'Linear Algebra'],
       status: 'active'
     },
     {
       id: 'LEC003',
-      name: 'Dr. Michael Chen',
+      name: 'Dr. Michael ',
       email: 'michael.chen@university.edu',
       department: 'Physics',
       courses: ['Quantum Mechanics', 'Thermodynamics'],
