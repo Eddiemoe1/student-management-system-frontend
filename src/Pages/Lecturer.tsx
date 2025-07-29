@@ -163,6 +163,7 @@ export const Lectures: React.FC = () => {
     const dateB = new Date(`${b.date}T${b.startTime}`);
     return dateA.getTime() - dateB.getTime();
   });
+  
 
   return (
     <div className="lectures-container">
@@ -302,6 +303,7 @@ export const Lectures: React.FC = () => {
                         >
                           <Edit className="icon" />
                         </button>
+
                         <button
                           onClick={() => handleDeleteLecture(lecture.id)}
                           className="btn-action delete"

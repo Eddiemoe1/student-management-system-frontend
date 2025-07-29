@@ -240,7 +240,6 @@ const Lecturers: React.FC = () => {
                       </span>
                     </td>
 
-                    
                     <td>
                       <div className="actions">
                         <button 
