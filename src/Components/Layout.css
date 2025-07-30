@@ -186,7 +186,7 @@ font-size:x-large;
   margin-top: 2rem;
   margin-bottom: 1rem;
   left: 1rem;
-  font-size: 1.125rem;
+  font-size: xx-large;
   line-height: 1.75rem;
   font-weight: 600;
   color: rgb(2, 141, 97);
@@ -195,7 +195,6 @@ font-size:x-large;
   display: row;
   height: 2rem;
   width: 2rem;
-  
 }
 
 @media (min-width: 1024px) {

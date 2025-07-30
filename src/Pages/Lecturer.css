@@ -222,7 +222,7 @@
 .date-info,
 .time-info {
   display: flex;
-  align-items: center;
+  align-items: start;
   color: #374151;
   font-size: 14px;
 }
