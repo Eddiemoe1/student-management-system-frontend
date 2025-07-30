@@ -22,7 +22,7 @@ const Lecturers: React.FC = () => {
   const [lecturers, setLecturers] = useState<Lecturer[]>([
     {
       id: 'LEC001',
-      name: 'Dr. Elena Moreau',
+      name: 'Dr. Elena',
       email: 'elena.moreau@university.edu',
       department: 'Computer Science',
       courses: ['Data Structures', 'Algorithms', 'Software Engineering'],

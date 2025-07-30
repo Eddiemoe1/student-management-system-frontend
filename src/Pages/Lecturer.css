@@ -198,7 +198,6 @@
   background-color: #f9fafb;
 }
 
-/* Lecture Details */
 .lecture-title {
   font-weight: 500;
   color: #111827;
@@ -285,7 +284,6 @@
   color: #6b7280;
 }
 
-/* Actions */
 .actions-cell {
   white-space: nowrap;
 }
@@ -297,7 +295,6 @@
   gap: 8px;
 }
 
-/* Empty State */
 .empty-state {
   text-align: center;
   padding: 48px 24px;
@@ -322,7 +319,6 @@
   color: #6b7280;
 }
 
-/* Modals */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -374,7 +370,6 @@
   color: #6b7280;
 }
 
-/* Form */
 .form-content {
   display: flex;
   flex-direction: column;
@@ -430,7 +425,6 @@
   border-top: 1px solid #e5e7eb;
 }
 
-/* Responsive */
 @media (min-width: 640px) {
   .lectures-header {
     flex-direction: row;
