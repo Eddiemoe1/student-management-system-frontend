@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './lecturers.css';
+import { Edit, Trash2 } from 'lucide-react';
 
 interface Lecturer {
   id: string;
@@ -247,7 +248,7 @@ const Lecturers: React.FC = () => {
                           onClick={() => handleEdit(lecturer)}
                           title="Edit"
                         >
-                          ✏️
+                          <Edit className="icon" />
                         </button>
                         <button 
                           className="action-btn toggle"
@@ -261,7 +262,7 @@ const Lecturers: React.FC = () => {
                           onClick={() => handleDelete(lecturer.id)}
                           title="Delete"
                         >
-                          🗑️
+                          <Trash2 className="icon" />
                         </button>
                       </div>
                     </td>
