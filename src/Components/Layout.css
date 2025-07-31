@@ -193,6 +193,7 @@ font-size:x-large;
   display: row;
   height: 2rem;
   width: 2rem;
+margin-left: 0.5rem;
 }
 
 @media (min-width: 1024px) {
