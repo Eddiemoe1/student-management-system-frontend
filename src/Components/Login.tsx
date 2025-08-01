@@ -104,7 +104,7 @@ export const Login: React.FC = () => {
               )}
             </div>
           </div>
-
+        
           {loginError && (
             <div className="error-alert">
               <p className="error-text">{loginError}</p>
