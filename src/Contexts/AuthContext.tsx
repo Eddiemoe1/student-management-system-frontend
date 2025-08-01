@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(true);
     password
     try {
-      //Mock login i'll replace with actual API call
+      
       const login = {}
       // const mockUser: User = {
       //   id: '1',
