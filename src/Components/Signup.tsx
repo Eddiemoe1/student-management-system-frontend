@@ -133,6 +133,7 @@ const SignUp: React.FC = () => {
             {errors.firstName && <span className="error-message">{errors.firstName}</span>}
           </div>
 
+
           <div className="form-group">
             <label htmlFor="lastName">Last Name</label>
             <input
