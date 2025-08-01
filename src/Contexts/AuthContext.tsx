@@ -46,22 +46,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     password
     try {
       //Mock login i'll replace with actual API call
-      const mockUser: User = {
-        id: '1',
-        email,
-        firstName: 'Ednah',
-        lastName: 'Moraa',
-        role: email.includes('admin') ? 'admin' : email.includes('lecturer') ? 'lecturer' : 'student',
-      };
+      const login = {}
+      // const mockUser: User = {
+      //   id: '1',
+      //   email,
+      //   firstName: 'Ednah',
+      //   lastName: 'Moraa',
+      //   role: email.includes('admin') ? 'admin' : email.includes('lecturer') ? 'lecturer' : 'student',
+      // };
       
       const mockToken = 'mock-jwt-token-' + Date.now();
       
-      setUser(mockUser);
-      setToken(mockToken);
+      //setUser(mockUser);
+     // setToken(mockToken);
       
       // Store in localStorage
-      localStorage.setItem('auth_token', mockToken);
-      localStorage.setItem('auth_user', JSON.stringify(mockUser));
+      //localStorage.setItem('auth_token', mockToken);
+     // localStorage.setItem('auth_user', JSON.stringify(mockUser));
       
     } catch (error) {
       throw new Error('Login failed');

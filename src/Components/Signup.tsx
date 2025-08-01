@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './signup.css';
+import axios from 'axios';
 
 interface FormData {
   firstName: string;
@@ -25,14 +26,18 @@ const SignUp: React.FC = () => {
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
+
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name as keyof FormData]) {
       setErrors(prev => ({
@@ -44,7 +49,7 @@ const SignUp: React.FC = () => {
 
   const validate = (): boolean => {
     const newErrors: Partial<FormData> = {};
-    
+
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
     if (!formData.email.trim()) {
@@ -70,58 +75,50 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validate()) return;
-    
+
     setIsSubmitting(true);
-    
+    setIsLoading(true);
+
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const res = await axios.post("http://localhost:5294/api/v1/Auth/register", formData);
       
-      // In a real app, you would call your backend here
-      // const response = await axios.post('/api/auth/signup', formData);
-      
-      setSuccessMessage('Account created successfully! Redirecting to login...');
-      // Reset form
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        role: 'student',
-        studentId: ''
-      });
-      
-      // Redirect to login after 2 seconds
+      setSuccessMessage(res.data.message || 'Registration successful.');
+
+      // Redirect to login after short delay
       setTimeout(() => {
-        // In a real app, you would use react-router or similar
         window.location.href = '/login';
-      }, 2000);
-    } catch (error) {
-      // Handle error
-      setErrors({
-        email: 'This email is already registered'
-      });
+      }, 1500);
+    } catch (error: any) {
+      const apiErrors = error.response?.data?.errors || {};
+      let message = 'Registration failed. Please try again.';
+
+      if (Object.keys(apiErrors).length > 0) {
+        message = Object.values(apiErrors).flat().join(' ');
+      }
+
+      alert(message); 
     } finally {
       setIsSubmitting(false);
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="signup-container">
       <div className="signup-card">
-        <h2> <b>Create Your Account</b></h2>
+        <h2><b>Create Your Account</b></h2>
         <p className="signup-description">
           Fill in the details below to create your account.
-        </p>        
+        </p>
+
         {successMessage && (
           <div className="success-message">
             {successMessage}
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
@@ -135,7 +132,7 @@ const SignUp: React.FC = () => {
             />
             {errors.firstName && <span className="error-message">{errors.firstName}</span>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="lastName">Last Name</label>
             <input
@@ -148,7 +145,7 @@ const SignUp: React.FC = () => {
             />
             {errors.lastName && <span className="error-message">{errors.lastName}</span>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -161,7 +158,7 @@ const SignUp: React.FC = () => {
             />
             {errors.email && <span className="error-message">{errors.email}</span>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -174,7 +171,7 @@ const SignUp: React.FC = () => {
             />
             {errors.password && <span className="error-message">{errors.password}</span>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
@@ -189,16 +186,45 @@ const SignUp: React.FC = () => {
               <span className="error-message">{errors.confirmPassword}</span>
             )}
           </div>
-          
+
+          {formData.role === 'student' && (
+            <div className="form-group">
+              <label htmlFor="studentId">Student ID</label>
+              <input
+                type="text"
+                id="studentId"
+                name="studentId"
+                value={formData.studentId}
+                onChange={handleChange}
+                className={errors.studentId ? 'error' : ''}
+              />
+              {errors.studentId && <span className="error-message">{errors.studentId}</span>}
+            </div>
+          )}
+
+          <div className="form-group">
+            <label htmlFor="role">Role</label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+            >
+              <option value="student">Student</option>
+              <option value="teacher">Lecturer</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
           <button
             type="submit"
             className="submit-btn"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isLoading}
           >
-            {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+            {isLoading ? 'Creating Account...' : 'Sign Up'}
           </button>
         </form>
-        
+
         <div className="login-link">
           Already have an account? <a href="/login">Log in</a>
         </div>
