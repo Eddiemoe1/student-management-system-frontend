@@ -3,7 +3,7 @@ import './index.css';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './Components/Layout';
 import {Login} from './Components/Login';
-import AdminDashboard from './Pages/AdminDashboard';
+// import AdminDashboard from './Pages/AdminDashboard';
 import Lecturer from './Pages/Lecturer';
 import {Marks} from './Pages/Marks';
 import Staff from './Pages/Staff';
@@ -11,6 +11,9 @@ import {Students} from './Pages/Student';
 import  {Subjects} from './Pages/Subject';
 import Signup from './Components/Signup';
 import Lecturers from './Pages/Lecturers';
+import LecturerDashboard from './Pages/dashboards/lecturer';
+import StudentDashboard from './Pages/dashboards/student';
+import AdminDashboard from './Pages/dashboards/admin';
 
 function App() {
   return (
@@ -18,20 +21,22 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
       <Route path="/" element={<Layout />}>
-        <Route path="dashboard" element={<AdminDashboard />} />
+        {/* <Route path="dashboard" element={<AdminDashboard />} /> */}
         <Route path="students" element={<Students />} />
         <Route path="staff" element={<Staff />} />
         <Route path="lectures" element={<Lecturer />} />
         <Route path="marks" element={<Marks />} />
         <Route path="subjects" element={<Subjects />} />
         <Route path="lecturers" element={<Lecturers />} />
+        <Route path="dashboards/lecturer" element={<LecturerDashboard />} />
+        <Route path="dashboards/student" element={<StudentDashboard />} />
+        <Route path="dashboards/admin" element={<AdminDashboard />} />
       </Route>
     </Routes>
   );
 }
 
 export default App;
-
 
 
 

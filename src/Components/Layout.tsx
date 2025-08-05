@@ -19,18 +19,34 @@ import {
 } from 'lucide-react';
 import './layout.css';
 
+
+const getDashboardRoute = (role: string | undefined): string => {
+  switch (role?.toLowerCase()) {
+    case 'admin':
+      return '/dashboards/admin';
+    case 'lecturer':
+      return '/dashboards/lecturer';
+    case 'student':
+      return '/dashboards/student';
+    case 'teacher':
+      return '/dashboards/lecturer';
+    default:
+      return '/login';
+  }
+};
+
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, roles: ['admin', 'lecturer', 'student'] },
-  { name: 'Students', href: '/students', icon: Users, roles: ['admin', 'lecturer'] },
+  { name: 'Dashboard', icon: LayoutDashboard, roles: ['admin', 'lecturer', 'student', 'teacher'], dynamic: true },
+  { name: 'Students', href: '/students', icon: Users, roles: ['admin', 'lecturer', 'teacher'] },
   { name: 'Staff', href: '/staff', icon: UserCheck, roles: ['admin'] },
   { name: 'Lecturers', href: '/lecturers', icon: User, roles: ['admin'] },
-  { name: 'Lectures', href: '/lectures', icon: Calendar, roles: ['admin', 'lecturer', 'student'] },
-  { name: 'Subjects', href: '/subjects', icon: BookMarked, roles: ['admin', 'lecturer'] },
-  { name: 'Marks', href: '/marks', icon: GraduationCap, roles: ['admin', 'lecturer', 'student'] },
+  { name: 'Lectures', href: '/lectures', icon: Calendar, roles: ['admin', 'lecturer', 'student', 'teacher'] },
+  { name: 'Subjects', href: '/subjects', icon: BookMarked, roles: ['admin', 'lecturer', 'teacher'] },
+  { name: 'Marks', href: '/marks', icon: GraduationCap, roles: ['admin', 'lecturer', 'student', 'teacher'] },
 ];
 
 export const Layout: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -41,9 +57,16 @@ export const Layout: React.FC = () => {
     navigate('/login');
   };
 
-  const filteredNavigation = navigation.filter(item => 
-    user && item.roles.includes(user.role)
+  if (isLoading) {
+    return <div className="loading-screen">Loading user data...</div>;
+  }
+
+  const normalizedRole = user?.role?.toLowerCase().trim();
+  const filteredNavigation = navigation.filter(item =>
+    normalizedRole && item.roles.includes(normalizedRole)
   );
+
+  console.log("User info in Layout:", user);
 
   return (
     <div className="layout-container">
@@ -60,13 +83,23 @@ export const Layout: React.FC = () => {
                 <X className="mobile-sidebar-close-icon" />
               </button>
             </div>
-            <SidebarContent filteredNavigation={filteredNavigation} currentPath={location.pathname} />
+            <SidebarContent
+              filteredNavigation={filteredNavigation}
+              currentPath={location.pathname}
+              navigate={navigate}
+              userRole={normalizedRole}
+            />
           </div>
         </div>
       )}
 
       <div className="desktop-sidebar">
-        <SidebarContent filteredNavigation={filteredNavigation} currentPath={location.pathname} />
+        <SidebarContent
+          filteredNavigation={filteredNavigation}
+          currentPath={location.pathname}
+          navigate={navigate}
+          userRole={normalizedRole}
+        />
       </div>
 
       <div className="main-content">
@@ -83,40 +116,27 @@ export const Layout: React.FC = () => {
               <div className="app-title-icon">
                 <img src={logo} alt="Logo" className="logo-image" />
               </div>
-              <h1 className="app-title">
-                STUDENT MANAGEMENT SYSTEM
-              </h1>
+              <h1 className="app-title">STUDENT MANAGEMENT SYSTEM</h1>
             </div>
-            
+
             <div className="user-controls">
-              <div 
-                className="user-profile" 
+              <div
+                className="user-profile"
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
               >
                 <div className="user-avatar">
                   <User className="user-avatar-icon" />
                 </div>
                 <div className="user-info">
-                  <p className="user-name">
-                    {user?.firstName} {user?.lastName}
-                  </p>
+                  <p className="user-name">{user?.firstName} {user?.lastName}</p>
                 </div>
-                {profileDropdownOpen ? (
-                  <ChevronUp className="dropdown-chevron" />
-                ) : (
-                  <ChevronDown className="dropdown-chevron" />
-                )}
+                {profileDropdownOpen ? <ChevronUp className="dropdown-chevron" /> : <ChevronDown className="dropdown-chevron" />}
               </div>
-              
+
               {profileDropdownOpen && (
                 <div className="profile-dropdown">
-                  <div className="dropdown-user-role">
-                    Role: {user?.role}
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="dropdown-logout-button"
-                  >
+                  <div className="dropdown-user-role">Role: {user?.role}</div>
+                  <button onClick={handleLogout} className="dropdown-logout-button">
                     <LogOut className="logout-icon" />
                     <span className="logout-text">Logout</span>
                   </button>
@@ -139,33 +159,51 @@ export const Layout: React.FC = () => {
 interface SidebarContentProps {
   filteredNavigation: any[];
   currentPath: string;
+  navigate: ReturnType<typeof useNavigate>;
+  userRole: string | undefined;
 }
 
-const SidebarContent: React.FC<SidebarContentProps> = ({ filteredNavigation, currentPath }) => {
+const SidebarContent: React.FC<SidebarContentProps> = ({ filteredNavigation, currentPath, navigate, userRole }) => {
   return (
     <div className="sidebar-content">
-      <div className="sidebar-header">
-      </div>
+      <div className="sidebar-header" />
       <div className="sidebar-nav-container">
         <nav className="sidebar-nav">
-          {filteredNavigation.map((item) => {
-            const isActive = currentPath === item.href;
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`nav-link ${isActive ? 'active' : ''}`}
-              >
-                <item.icon
-                  className={`nav-icon ${isActive ? 'active-icon' : ''}`}
-                />
-                {item.name}
-              </Link>
-            );
-          })}
+          {filteredNavigation.length === 0 ? (
+            <p className="sidebar-empty">No accessible pages for your role.</p>
+          ) : (
+            filteredNavigation.map((item) => {
+              const isActive = currentPath === item.href;
+              if (item.dynamic) {
+                return (
+                  <button
+                        key={item.name}
+                        onClick={() => navigate(getDashboardRoute(userRole))}
+                        className="nav-link no-bg-button"
+                        style={{ backgroundColor: 'transparent', border: 'none' }}
+                      >
+                        <item.icon className="nav-icon" />
+                        {item.name}
+                      </button>
+
+                );
+              }
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`nav-link ${isActive ? 'active' : ''}`}
+                >
+                  <item.icon className={`nav-icon ${isActive ? 'active-icon' : ''}`} />
+                  {item.name}
+                </Link>
+              );
+            })
+          )}
         </nav>
       </div>
     </div>
   );
 };
+
 export default Layout;

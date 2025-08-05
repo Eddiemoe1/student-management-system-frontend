@@ -1,79 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../Contexts/AuthContext';
 import { type Student } from '../Types/Index';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2, 
-  Eye, 
-  User,
-  Mail,
-  Phone,
-  MapPin,
-  Calendar
+import {
+  Plus, Search, Filter, Edit, Trash2, Eye, User,
+  Mail, Phone, MapPin, Calendar
 } from 'lucide-react';
 import './Student.css';
 
-// My Mock data
-const mockStudents: Student[] = [
-  {
-    id: '1',
-    studentId: 'STU001',
-    firstName: 'cynthia',
-    lastName: '',
-    email: 'cynthia@student.com',
-    phone: '+25474567890',
-    dateOfBirth: '2000-05-15',
-    address: '40500',
-    enrollmentDate: '2023-09-01',
-    status: 'active'
-  },
-  {
-    id: '2',
-    studentId: 'STU002',
-    firstName: 'Jane',
-    lastName: 'clare',
-    email: 'jane@student.com',
-    phone: '+25474567891',
-    dateOfBirth: '1999-12-20',
-    address: '20890',
-    enrollmentDate: '2023-09-01',
-    status: 'active'
-  },
-  {
-    id: '3',
-    studentId: 'STU003',
-    firstName: 'mike',
-    lastName: 'Anthony',
-    email: 'mike@student.com',
-    phone: '+25474567892',
-    dateOfBirth: '2001-03-10',
-    address: '78900',
-    enrollmentDate: '2023-09-01',
-    status: 'inactive'
-  }
-];
-
 export const Students: React.FC = () => {
   const { user } = useAuth();
-  const [students, setStudents] = useState<Student[]>(mockStudents);
+  const [students, setStudents] = useState<Student[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive' | 'graduated'>('all');
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [showViewModal, setShowViewModal] = useState(false);
 
+ useEffect(() => {
+  fetch('https://localhost:7000/api/V1/Student')
+    .then(res => res.json())
+    .then(data => {
+      const mappedStudents: Student[] = data.map((item: any) => ({
+        ...item,
+        phone: item.phoneNumber, 
+      }));
+      setStudents(mappedStudents);
+    })
+    .catch(err => console.error('Error fetching students:', err));
+}, []);
+
+
   const filteredStudents = students.filter(student => {
-    const matchesSearch = 
+    const matchesSearch =
       student.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
       student.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesStatus = statusFilter === 'all' || student.status === statusFilter;
-    
     return matchesSearch && matchesStatus;
   });
 
@@ -95,20 +59,17 @@ export const Students: React.FC = () => {
   const handleDeleteStudent = (studentId: string) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       setStudents(students.filter(s => s.id !== studentId));
+      // Add backend deletion later if needed
     }
   };
 
   const getStatusBadge = (status: string) => {
-    const baseClasses = 'status-badge';
+    const base = 'status-badge';
     switch (status) {
-      case 'active':
-        return `${baseClasses} status-active`;
-      case 'inactive':
-        return `${baseClasses} status-inactive`;
-      case 'graduated':
-        return `${baseClasses} status-graduated`;
-      default:
-        return `${baseClasses} status-default`;
+      case 'active': return `${base} status-active`;
+      case 'inactive': return `${base} status-inactive`;
+      case 'graduated': return `${base} status-graduated`;
+      default: return `${base} status-default`;
     }
   };
 
@@ -118,20 +79,13 @@ export const Students: React.FC = () => {
       <div className="students-header">
         <div>
           <h1>Students</h1>
-          <p className="students-subtitle">
-            Manage student information and enrollment
-          </p>
+          <p className="students-subtitle">Manage student information and enrollment</p>
         </div>
         {user?.role === 'admin' && (
-          <div className="students-header-action">
-            <button
-              onClick={handleAddStudent}
-              className="btn btn-primary"
-            >
-              <Plus className="icon" />
-              Add Student
-            </button>
-          </div>
+          <button onClick={handleAddStudent} className="btn btn-primary">
+            <Plus className="icon" />
+            Add Student
+          </button>
         )}
       </div>
 
@@ -140,9 +94,7 @@ export const Students: React.FC = () => {
         <div className="filters-content">
           <div className="search-container">
             <div className="search-wrapper">
-              <div className="search-icon">
-                <Search className="icon" />
-              </div>
+              <Search className="icon" />
               <input
                 type="text"
                 value={searchTerm}
@@ -153,19 +105,17 @@ export const Students: React.FC = () => {
             </div>
           </div>
           <div className="filter-options">
-            <div className="filter-group">
-              <Filter className="icon" />
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="filter-select"
-              >
-                <option value="all">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="graduated">Graduated</option>
-              </select>
-            </div>
+            <Filter className="icon" />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as any)}
+              className="filter-select"
+            >
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="graduated">Graduated</option>
+            </select>
           </div>
         </div>
       </div>
@@ -186,97 +136,53 @@ export const Students: React.FC = () => {
             </thead>
             <tbody>
               {filteredStudents.map((student) => (
-                <tr key={student.id} className="table-row">
+                <tr key={student.id}>
                   <td>
                     <div className="student-info">
-                      <div className="student-avatar">
-                        <div className="avatar-circle">
-                          <User className="icon" />
-                        </div>
-                      </div>
-                      <div className="student-details">
-                        <div className="student-name">
-                          {student.firstName} {student.lastName}
-                        </div>
+                      <div className="avatar-circle"><User className="icon" /></div>
+                      <div>
+                        <div>{student.firstName} {student.lastName}</div>
                         <div className="student-email">{student.email}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="student-id">
-                    {student.studentId}
-                  </td>
-                  <td className="student-contact">
-                    <div>{student.phone}</div>
-                    <div className="student-address">
-                      {student.address}
-                    </div>
-                  </td>
+                  <td>{student.studentId}</td>
                   <td>
-                    <span className={getStatusBadge(student.status)}>
-                      {student.status}
-                    </span>
+                    <div>{student.phone}</div> 
                   </td>
-                  <td className="enrollment-date">
-                    {new Date(student.enrollmentDate).toLocaleDateString()}
-                  </td>
+                  <td><span className={getStatusBadge(student.status)}>{student.status}</span></td>
+                  <td>{new Date(student.enrollmentDate).toLocaleDateString()}</td>
                   <td className="actions-cell">
-                    <div className="actions-wrapper">
-                      <button
-                        onClick={() => handleViewStudent(student)}
-                        className="btn-action view"
-                        title="View Details"
-                      >
-                        <Eye className="icon" />
-                      </button>
-                      {user?.role === 'admin' && (
-                        <>
-                          <button
-                            onClick={() => handleEditStudent(student)}
-                            className="btn-action edit"
-                            title="Edit"
-                          >
-                            <Edit className="icon" />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteStudent(student.id)}
-                            className="btn-action delete"
-                            title="Delete"
-                          >
-                            <Trash2 className="icon" />
-                          </button>
-                        </>
-                      )}
-                    </div>
+                    <button onClick={() => handleViewStudent(student)} className="btn-action view"><Eye className="icon" /></button>
+                    {user?.role === 'admin' && (
+                      <>
+                        <button onClick={() => handleEditStudent(student)} className="btn-action edit"><Edit className="icon" /></button>
+                        <button onClick={() => handleDeleteStudent(student.id)} className="btn-action delete"><Trash2 className="icon" /></button>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        
         {filteredStudents.length === 0 && (
           <div className="empty-state">
             <User className="empty-icon" />
             <h3>No students found</h3>
-            <p>
-              {searchTerm ? 'Try adjusting your search terms.' : 'Get started by adding a new student.'}
-            </p>
+            <p>{searchTerm ? 'Try adjusting your search terms.' : 'Get started by adding a new student.'}</p>
           </div>
         )}
       </div>
 
-      {/* View Student Modal */}
+      {/* Modals */}
       {showViewModal && selectedStudent && (
-        <StudentViewModal
-          student={selectedStudent}
-          onClose={() => {
-            setShowViewModal(false);
-            setSelectedStudent(null);
-          }}
-        />
+        <StudentViewModal student={selectedStudent} onClose={() => {
+          setShowViewModal(false);
+          setSelectedStudent(null);
+        }} />
       )}
 
-      {/* Add/Edit Student Modal */}
       {showAddModal && (
         <StudentFormModal
           student={selectedStudent}
@@ -284,14 +190,33 @@ export const Students: React.FC = () => {
             setShowAddModal(false);
             setSelectedStudent(null);
           }}
-          onSave={(student) => {
-            if (selectedStudent) {
-              setStudents(students.map(s => s.id === selectedStudent.id ? student : s));
+          onSave={async (newStudent) => {
+            const response = await fetch('https://localhost:7000/api/V1/Student', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                studentNo: newStudent.studentId,
+                firstName: newStudent.firstName,
+                lastName: newStudent.lastName,
+                email: newStudent.email,
+                phoneNumber: newStudent.phone,
+                address: newStudent.address,
+                dateOfBirth: newStudent.dateOfBirth
+              })
+            });
+
+            if (response.ok) {
+              const savedStudent = await response.json();
+              setStudents([...students, {
+                ...newStudent,
+                id: savedStudent.id,
+                enrollmentDate: new Date().toISOString().split('T')[0],
+              }]);
+              setShowAddModal(false);
+              setSelectedStudent(null);
             } else {
-              setStudents([...students, { ...student, id: Date.now().toString() }]);
+              alert('Failed to save student');
             }
-            setShowAddModal(false);
-            setSelectedStudent(null);
           }}
         />
       )}
@@ -392,6 +317,7 @@ interface StudentFormModalProps {
   onSave: (student: Student) => void;
 }
 
+
 const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, onSave }) => {
   const [formData, setFormData] = useState<Partial<Student>>(
     student || {
@@ -411,6 +337,7 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
     e.preventDefault();
     onSave(formData as Student);
   };
+
 
   return (
     <div className="modal-overlay">

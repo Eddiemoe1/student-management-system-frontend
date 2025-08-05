@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import type {ReactNode} from 'react';
-import type { AuthContextType } from '../Types/Index';
-import type {UserRole} from '../Types/Index';
+import type { ReactNode } from 'react';
+import type { AuthContextType, UserRole } from '../Types/Index';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,6 +15,7 @@ export const useAuth = () => {
 interface AuthProviderProps {
   children: ReactNode;
 }
+
 export interface User {
   id: string;
   email: string;
@@ -23,43 +23,58 @@ export interface User {
   lastName: string;
   role: UserRole;
 }
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored auth data on mount
     const storedToken = localStorage.getItem('auth_token');
     const storedUser = localStorage.getItem('auth_user');
-    
+
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
-    
+
     setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string): Promise<void> => {
     setIsLoading(true);
-    password
     try {
-      
-      const login = {}
-      // Simulate API call
-    
-      const mockToken = 'mock-jwt-token-' + Date.now();
-      
-      setUser(mockUser);
-     setToken(mockToken);
-      
-      // Store in localStorage
-      localStorage.setItem('auth_token', mockToken);
-      localStorage.setItem('auth_user', JSON.stringify(mockUser));
-      
-    } catch (error) {
-      throw new Error('Login failed');
+      const response = await fetch('https://localhost:7000/api/v1/Auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.message || 'Login failed');
+      }
+
+      if (!data.token || !data.user) {
+        throw new Error('Missing token or user in response');
+      }
+
+      const user: User = {
+        id: data.user.id,
+        email: data.user.email,
+        firstName: data.user.username?.split(' ')[0] || '',
+        lastName: data.user.username?.split(' ')[1] || '',
+        role: data.user.role?.toLowerCase().trim(), 
+      };
+
+      setUser(user);
+      setToken(data.token);
+      localStorage.setItem('auth_token', data.token);
+      localStorage.setItem('auth_user', JSON.stringify(user));
+    } catch (error: any) {
+      console.error('Login error:', error);
+      throw new Error(error.message || 'Login failed');
     } finally {
       setIsLoading(false);
     }
@@ -83,9 +98,5 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoading,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

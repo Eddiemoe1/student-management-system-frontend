@@ -82,7 +82,7 @@ const SignUp: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5294/api/v1/Auth/register", formData);
+      const res = await axios.post("https://localhost:7000/api/v1/Auth/register", formData);
       
       setSuccessMessage(res.data.message || 'Registration successful.');
 
