@@ -430,5 +430,4 @@ const Lecturers: React.FC = () => {
     </div>
   );
 };
-
 export default Lecturers;
