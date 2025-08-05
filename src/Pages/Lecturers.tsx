@@ -348,6 +348,7 @@ const Lecturers: React.FC = () => {
         </div>
       )}
 
+
       {showEditForm && currentLecturer && (
         <div className="modal-overlay">
           <div className="modal">
