@@ -82,7 +82,21 @@ const SignUp: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("https://localhost:7000/api/v1/Auth/register", formData);
+      // Map frontend state to backend field names
+      const payload = {
+        firstName: formData.firstName,
+        LastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword, 
+        ID: formData.studentId, 
+        role: formData.role
+      };
+
+      const res = await axios.post(
+        "https://localhost:7000/api/v1/Auth/register",
+        payload
+      );
       
       setSuccessMessage(res.data.message || 'Registration successful.');
 
@@ -132,7 +146,6 @@ const SignUp: React.FC = () => {
             />
             {errors.firstName && <span className="error-message">{errors.firstName}</span>}
           </div>
-
 
           <div className="form-group">
             <label htmlFor="lastName">Last Name</label>

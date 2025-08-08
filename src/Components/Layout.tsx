@@ -19,7 +19,6 @@ import {
 } from 'lucide-react';
 import './layout.css';
 
-
 const getDashboardRoute = (role: string | undefined): string => {
   switch (role?.toLowerCase()) {
     case 'admin':
@@ -52,6 +51,18 @@ export const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good morning';
+    if (hour < 17) return 'Good afternoon';
+    return 'Good evening';
+  };
+
+  const getUserName = () => {
+    if (!user) return '';
+    return user.firstName || user.email?.split('@')[0] || '';
+  };
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -65,8 +76,6 @@ export const Layout: React.FC = () => {
   const filteredNavigation = navigation.filter(item =>
     normalizedRole && item.roles.includes(normalizedRole)
   );
-
-  console.log("User info in Layout:", user);
 
   return (
     <div className="layout-container">
@@ -127,10 +136,11 @@ export const Layout: React.FC = () => {
                 <div className="user-avatar">
                   <User className="user-avatar-icon" />
                 </div>
-                <div className="user-info">
-                  <p className="user-name">{user?.firstName} {user?.lastName}</p>
-                </div>
-                {profileDropdownOpen ? <ChevronUp className="dropdown-chevron" /> : <ChevronDown className="dropdown-chevron" />}
+                {profileDropdownOpen ? (
+                  <ChevronUp className="dropdown-chevron" />
+                ) : (
+                  <ChevronDown className="dropdown-chevron" />
+                )}
               </div>
 
               {profileDropdownOpen && (
@@ -148,6 +158,16 @@ export const Layout: React.FC = () => {
 
         <main className="page-content">
           <div className="content-container">
+            {/* Greeting Card */}
+            <div className="greeting-card">
+              <h1 className="greeting-title">
+                {getGreeting()}, {getUserName()}
+              </h1>
+              <p className="greeting-subtext">
+                Welcome back to your {normalizedRole} dashboard
+              </p>
+            </div>
+
             <Outlet />
           </div>
         </main>
@@ -177,15 +197,14 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ filteredNavigation, cur
               if (item.dynamic) {
                 return (
                   <button
-                        key={item.name}
-                        onClick={() => navigate(getDashboardRoute(userRole))}
-                        className="nav-link no-bg-button"
-                        style={{ backgroundColor: 'transparent', border: 'none' }}
-                      >
-                        <item.icon className="nav-icon" />
-                        {item.name}
-                      </button>
-
+                    key={item.name}
+                    onClick={() => navigate(getDashboardRoute(userRole))}
+                    className="nav-link no-bg-button"
+                    style={{ backgroundColor: 'transparent', border: 'none' }}
+                  >
+                    <item.icon className="nav-icon" />
+                    {item.name}
+                  </button>
                 );
               }
               return (

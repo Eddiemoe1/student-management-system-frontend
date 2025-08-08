@@ -305,3 +305,19 @@
   width: 1rem;
   height: 1rem;
 }
+.layout-greeting {
+  margin-bottom: 1.5rem;
+}
+
+.layout-greeting h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937; /* gray-800 */
+  margin: 0;
+}
+
+.greeting-subtext {
+  color: #6b7280; /* gray-500 */
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}

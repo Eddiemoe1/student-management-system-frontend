@@ -42,43 +42,46 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (email: string, password: string): Promise<void> => {
-    setIsLoading(true);
-    try {
-      const response = await fetch('https://localhost:7000/api/v1/Auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+  setIsLoading(true);
+  try {
+    const response = await fetch('https://localhost:7000/api/v1/Auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data?.message || 'Login failed');
-      }
-
-      if (!data.token || !data.user) {
-        throw new Error('Missing token or user in response');
-      }
-
-      const user: User = {
-        id: data.user.id,
-        email: data.user.email,
-        firstName: data.user.username?.split(' ')[0] || '',
-        lastName: data.user.username?.split(' ')[1] || '',
-        role: data.user.role?.toLowerCase().trim(), 
-      };
-
-      setUser(user);
-      setToken(data.token);
-      localStorage.setItem('auth_token', data.token);
-      localStorage.setItem('auth_user', JSON.stringify(user));
-    } catch (error: any) {
-      console.error('Login error:', error);
-      throw new Error(error.message || 'Login failed');
-    } finally {
-      setIsLoading(false);
+    if (!response.ok) {
+      // Try to read the error message as text (not JSON)
+      const errorText = await response.text();
+      throw new Error(errorText || 'Login failed');
     }
-  };
+
+    const data = await response.json();
+
+    if (!data.token || !data.user) {
+      throw new Error('Missing token or user in response');
+    }
+
+    const user: User = {
+      id: data.user.id,
+      email: data.user.email,
+      firstName: data.user.username?.split(' ')[0] || '',
+      lastName: data.user.username?.split(' ')[1] || '',
+      role: data.user.role?.toLowerCase().trim(),
+    };
+
+    setUser(user);
+    setToken(data.token);
+    localStorage.setItem('auth_token', data.token);
+    localStorage.setItem('auth_user', JSON.stringify(user));
+  } catch (error: any) {
+    console.error('Login error:', error);
+    throw new Error(error.message || 'Login failed');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const logout = () => {
     setUser(null);

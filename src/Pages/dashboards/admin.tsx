@@ -34,34 +34,19 @@ const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
   const averageMark = mockStats.recentMarks.reduce((sum, mark) => sum + mark.marks, 0) / mockStats.recentMarks.length;
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
-    return 'Good evening';
-  };
-
-  const getAdminName = () => {
-    if (!user) return 'Admin';
-    return user.firstName || user.email.split('@')[0] || 'Admin';
-  };
 
   return (
     <div className="dashboard-space">
-      <div className="dashboard-greeting">
-        <h1>{getGreeting()}, {getAdminName()}</h1>
-        <p className="greeting-subtext">Here's what's happening with your institution today</p>
-      </div>
 
       <div className="stats-grid">
         <StatCard title="Total Students" value={mockStats.totalStudents} icon={Users} color="bg-blue" subtitle={`${mockStats.activeStudents} active`} />
         <StatCard title="Total Staff" value={mockStats.totalStaff} icon={UserCheck} color="bg-orange" />
         <StatCard title="Subjects" value={mockStats.totalSubjects} icon={BookMarked} color="bg-purple" />
         <StatCard title="Lectures" value={mockStats.totalLectures} icon={Calendar} color="bg-green" subtitle={`${mockStats.upcomingLectures} upcoming`} />
-        <StatCard title="Average Marks" value={averageMark.toFixed(1)} icon={TrendingUp} color="bg-blue" subtitle="Average of recent marks" />
+        {/* <StatCard title="Average Marks" value={averageMark.toFixed(1)} icon={TrendingUp} color="bg-blue" subtitle="Average of recent marks" /> */}
         <StatCard title="Active Students" value={mockStats.activeStudents} icon={Users} color="bg-orange" />
         <StatCard title="Active lecturers" value={mockStats.activeStudents} icon={Users} color="bg-purple" />
-        <StatCard title="Marks uploaded" value={mockStats.activeStudents} icon={Users} color="bg-green" />
+        {/* <StatCard title="Marks uploaded" value={mockStats.activeStudents} icon={Users} color="bg-green" /> */}
 
       </div>
 
