@@ -4,7 +4,6 @@ import {
   UserCheck,
   BookMarked,
   Calendar,
-  TrendingUp,
 } from 'lucide-react';
 import { useAuth } from '../../Contexts/AuthContext';
 import StatCard from './StatsCard';
@@ -16,9 +15,10 @@ const mockStats = {
   totalSubjects: 28,
   totalLectures: 156,
   activeStudents: 1189,
+  activeLecturers: 38,
   upcomingLectures: 12,
   recentMarks: [
-    { id: '1', studentName: 'Ednah ', subjectName: 'BCS 374', marks: 85, totalMarks: 100, grade: 'A' },
+    { id: '1', studentName: 'Ednah', subjectName: 'BCS 374', marks: 85, totalMarks: 100, grade: 'A' },
     { id: '2', studentName: 'Janey', subjectName: 'BCS 367', marks: 78, totalMarks: 100, grade: 'B' },
     { id: '3', studentName: 'Lydiah', subjectName: 'BCS 321', marks: 92, totalMarks: 100, grade: 'A' },
   ],
@@ -32,24 +32,52 @@ const mockStats = {
 
 const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
-  const averageMark = mockStats.recentMarks.reduce((sum, mark) => sum + mark.marks, 0) / mockStats.recentMarks.length;
-
 
   return (
     <div className="dashboard-space">
-
-      <div className="stats-grid">
-        <StatCard title="Total Students" value={mockStats.totalStudents} icon={Users} color="bg-blue" subtitle={`${mockStats.activeStudents} active`} />
-        <StatCard title="Total Staff" value={mockStats.totalStaff} icon={UserCheck} color="bg-orange" />
-        <StatCard title="Subjects" value={mockStats.totalSubjects} icon={BookMarked} color="bg-purple" />
-        <StatCard title="Lectures" value={mockStats.totalLectures} icon={Calendar} color="bg-green" subtitle={`${mockStats.upcomingLectures} upcoming`} />
-        {/* <StatCard title="Average Marks" value={averageMark.toFixed(1)} icon={TrendingUp} color="bg-blue" subtitle="Average of recent marks" /> */}
-        <StatCard title="Active Students" value={mockStats.activeStudents} icon={Users} color="bg-orange" />
-        <StatCard title="Active lecturers" value={mockStats.activeStudents} icon={Users} color="bg-purple" />
-        {/* <StatCard title="Marks uploaded" value={mockStats.activeStudents} icon={Users} color="bg-green" /> */}
-
+      {/* Stats Section */}
+      <div className="stats-grid-three">
+        <StatCard
+          title="Total Students"
+          value={mockStats.totalStudents}
+          icon={Users}
+          color="bg-blue"
+          subtitle={`${mockStats.activeStudents} active`}
+        />
+        <StatCard
+          title="Total Staff"
+          value={mockStats.totalStaff}
+          icon={UserCheck}
+          color="bg-orange"
+        />
+        <StatCard
+          title="Subjects"
+          value={mockStats.totalSubjects}
+          icon={BookMarked}
+          color="bg-purple"
+        />
+        <StatCard
+          title="Lectures"
+          value={mockStats.totalLectures}
+          icon={Calendar}
+          color="bg-green"
+          subtitle={`${mockStats.upcomingLectures} upcoming`}
+        />
+        <StatCard
+          title="Active Students"
+          value={mockStats.activeStudents}
+          icon={Users}
+          color="bg-orange"
+        />
+        <StatCard
+          title="Active Lecturers"
+          value={mockStats.activeLecturers}
+          icon={UserCheck}
+          color="bg-purple"
+        />
       </div>
 
+      {/* Charts Section */}
       <div className="charts-grid">
         <div className="dashboard-card">
           <h3 className="card-title">Subject Enrollment</h3>
@@ -59,7 +87,10 @@ const AdminDashboard: React.FC = () => {
                 <span className="subject-name">{item.subject}</span>
                 <div className="subject-progress">
                   <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: `${(item.students / 50) * 100}%` }}></div>
+                    <div
+                      className="progress-fill"
+                      style={{ width: `${(item.students / 50) * 100}%` }}
+                    ></div>
                   </div>
                   <span className="student-count">{item.students}</span>
                 </div>
@@ -78,11 +109,20 @@ const AdminDashboard: React.FC = () => {
                   <p className="subject-name">{mark.subjectName}</p>
                 </div>
                 <div className="mark-details">
-                  <p className="mark-score">{mark.marks}/{mark.totalMarks}</p>
-                  <p className={`mark-grade ${
-                    mark.grade === 'A' ? 'grade-a' : 
-                    mark.grade === 'B' ? 'grade-b' : 'grade-c'
-                  }`}>{mark.grade}</p>
+                  <p className="mark-score">
+                    {mark.marks}/{mark.totalMarks}
+                  </p>
+                  <p
+                    className={`mark-grade ${
+                      mark.grade === 'A'
+                        ? 'grade-a'
+                        : mark.grade === 'B'
+                        ? 'grade-b'
+                        : 'grade-c'
+                    }`}
+                  >
+                    {mark.grade}
+                  </p>
                 </div>
               </div>
             ))}
