@@ -17,11 +17,12 @@ export const Students: React.FC = () => {
   const [showViewModal, setShowViewModal] = useState(false);
 
  useEffect(() => {
-  fetch('https://localhost:7000/api/V1/Student')
+  fetch('https://localhost:7000/api/Students')
     .then(res => res.json())
     .then(data => {
       const mappedStudents: Student[] = data.map((item: any) => ({
         ...item,
+        studentId: item.studentNo,
         phone: item.phoneNumber, 
       }));
       setStudents(mappedStudents);
@@ -59,7 +60,6 @@ export const Students: React.FC = () => {
   const handleDeleteStudent = (studentId: string) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       setStudents(students.filter(s => s.id !== studentId));
-      // Add backend deletion later if needed
     }
   };
 
@@ -151,13 +151,17 @@ export const Students: React.FC = () => {
                     <div>{student.phone}</div> 
                   </td>
                   <td><span className={getStatusBadge(student.status)}>{student.status}</span></td>
-                  <td>{new Date(student.enrollmentDate).toLocaleDateString()}</td>
+                    <td>
+                      {student.enrollmentDate && !isNaN(Date.parse(student.enrollmentDate))
+                        ? new Date(student.enrollmentDate).toLocaleDateString()
+                        : "N/A"}
+                    </td>
                   <td className="actions-cell">
-                    <button onClick={() => handleViewStudent(student)} className="btn-action view"><Eye className="icon" /></button>
+                    <button onClick={() => handleViewStudent(student)} className="btn-view"><Eye className="icon" /></button>
                     {user?.role === 'admin' && (
                       <>
-                        <button onClick={() => handleEditStudent(student)} className="btn-action edit"><Edit className="icon" /></button>
-                        <button onClick={() => handleDeleteStudent(student.id)} className="btn-action delete"><Trash2 className="icon" /></button>
+                        <button onClick={() => handleEditStudent(student)}  className="btn-edit"><Edit className="icon" /></button>
+                        <button onClick={() => handleDeleteStudent(student.id)} className="btn-delete"><Trash2 className="icon" /></button>
                       </>
                     )}
                   </td>
@@ -175,7 +179,6 @@ export const Students: React.FC = () => {
         )}
       </div>
 
-      {/* Modals */}
       {showViewModal && selectedStudent && (
         <StudentViewModal student={selectedStudent} onClose={() => {
           setShowViewModal(false);
@@ -191,7 +194,7 @@ export const Students: React.FC = () => {
             setSelectedStudent(null);
           }}
           onSave={async (newStudent) => {
-            const response = await fetch('https://localhost:7000/api/V1/Student', {
+            const response = await fetch('https://localhost:7000/api/Students', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -224,7 +227,6 @@ export const Students: React.FC = () => {
   );
 };
 
-// Student View Modal Component
 interface StudentViewModalProps {
   student: Student;
   onClose: () => void;
@@ -310,7 +312,6 @@ const StudentViewModal: React.FC<StudentViewModalProps> = ({ student, onClose })
   );
 };
 
-// Student Form Modal Component
 interface StudentFormModalProps {
   student: Student | null;
   onClose: () => void;
@@ -333,27 +334,75 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
     }
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData as Student);
-  };
 
+    try {
+      const studentResponse = await fetch('https://localhost:7000/api/Students', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          StudentNo: formData.studentId,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phoneNumber: formData.phone,
+          address: formData.address,
+          dateOfBirth: formData.dateOfBirth
+        })
+      });
+
+      if (!studentResponse.ok) {
+        alert('Failed to save student');
+        return;
+      }
+
+      const savedStudent = await studentResponse.json();
+
+      const defaultPassword = "Student@123"; 
+      const userResponse = await fetch('https://localhost:7000/api/v1/Auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: savedStudent.firstname + savedStudent.lastName,
+          firstName: savedStudent.firstName,
+          lastName: savedStudent.lastName,
+          email: savedStudent.email,
+          password: defaultPassword,
+          confirmPassword: defaultPassword,
+          role: "student",
+          studentId: savedStudent.id
+        })
+      });
+
+      if (!userResponse.ok) {
+        alert('Student saved but failed to create login account');
+      } else {
+        alert(`Student saved successfully!\nDefault password: ${defaultPassword}`);
+      }
+
+      onSave({
+        ...(formData as Student),
+        id: savedStudent.id,
+        studentId: savedStudent.studentNo,
+        enrollmentDate: new Date().toISOString().split('T')[0],
+      });
+
+      onClose();
+    } catch (error) {
+      console.error('Error saving student and creating user:', error);
+      alert('An error occurred. Please try again.');
+    }
+  };
 
   return (
     <div className="modal-overlay">
       <div className="modal-container">
         <div className="modal-header">
-          <h3>
-            {student ? 'Edit Student' : 'Add New Student'}
-          </h3>
-          <button
-            onClick={onClose}
-            className="modal-close"
-          >
-            ✕
-          </button>
+          <h3>{student ? 'Edit Student' : 'Add New Student'}</h3>
+          <button onClick={onClose} className="modal-close">✕</button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="form-content">
           <div className="form-grid">
             <div className="form-group">
@@ -377,7 +426,7 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
               />
             </div>
           </div>
-          
+
           <div className="form-group">
             <label>Email</label>
             <input
@@ -388,7 +437,7 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
               className="form-input"
             />
           </div>
-          
+
           <div className="form-grid">
             <div className="form-group">
               <label>Phone</label>
@@ -411,7 +460,7 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
               />
             </div>
           </div>
-          
+
           <div className="form-group">
             <label>Address</label>
             <textarea
@@ -422,7 +471,7 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
               className="form-textarea"
             />
           </div>
-          
+
           <div className="form-grid">
             <div className="form-group">
               <label>Enrollment Date</label>
@@ -447,19 +496,12 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
               </select>
             </div>
           </div>
-          
+
           <div className="form-footer">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn btn-secondary"
-            >
+            <button type="button" onClick={onClose} className="btn btn-secondary">
               Cancel
             </button>
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
+            <button type="submit" className="btn btn-primary">
               {student ? 'Update' : 'Add'} Student
             </button>
           </div>
@@ -468,4 +510,6 @@ const StudentFormModal: React.FC<StudentFormModalProps> = ({ student, onClose, o
     </div>
   );
 };
+//on this page you can render the buttin useless after its been clicked once so as to prevent the user from saving twice or more
+
 export default Students;

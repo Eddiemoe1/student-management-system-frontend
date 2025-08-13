@@ -9,6 +9,18 @@ import { useAuth } from '../../Contexts/AuthContext';
 import StatCard from './StatsCard';
 import './Dashboard.css';
 
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good morning';
+  if (hour < 17) return 'Good afternoon';
+  return 'Good evening';
+};
+
+const getUserName = (user: any) => {
+  if (!user) return '';
+  return user.firstName || user.email?.split('@')[0] || '';
+};
+
 const mockStats = {
   totalStudents: 1247,
   totalStaff: 45,
@@ -35,6 +47,16 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="dashboard-space">
+      {/* Greeting Card */}
+      <div className="greeting-card">
+        <h1 className="greeting-title">
+          {getGreeting()}, {getUserName(user)}
+        </h1>
+        <p className="greeting-subtext">
+          Welcome back to your {user?.role?.toLowerCase()} dashboard
+        </p>
+      </div>
+
       {/* Stats Section */}
       <div className="stats-grid-three">
         <StatCard

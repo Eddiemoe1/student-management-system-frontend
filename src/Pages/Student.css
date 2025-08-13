@@ -545,5 +545,49 @@
   .form-grid {
     grid-template-columns: 1fr 1fr;
   }
+button {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.btn-edit {
+  background-color: #448dc9;
+  padding: 4px 8px;
+
+}
+.btn-edit:hover {
+  background-color: #448dc9;
+  transform: scale(1.05);
+}
+
+.btn-delete {
+  background-color: #c26f69;
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;  
+  font-weight: bold;
+  border-radius: 6px;
+}
+.btn-delete:hover {
+  background-color: #c26f69;
+  transform: scale(1.05);
+}
+
+.btn-view {
+  background-color: rgb(2, 141, 97); 
+    padding: 4px 8px;
+
+}
+.btn-view:hover {
+  background-color: rgb(2, 141, 97);
+  transform: scale(1.05);
+}
+
 }
 

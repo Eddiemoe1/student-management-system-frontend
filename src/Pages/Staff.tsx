@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import './Staff.css';
 
-// My Mock data 
 const mockStaff: Staff[] = [
   {
     id: '1',
@@ -284,8 +283,6 @@ export const StaffPage: React.FC = () => {
           </p>
         </div>
       )}
-
-      {/* View Staff Modal */}
       {showViewModal && selectedStaff && (
         <StaffViewModal
           staff={selectedStaff}
@@ -295,8 +292,6 @@ export const StaffPage: React.FC = () => {
           }}
         />
       )}
-
-      {/* Add/Edit Staff Modal */}
       {showAddModal && (
         <StaffFormModal
           staff={selectedStaff}
@@ -319,7 +314,6 @@ export const StaffPage: React.FC = () => {
   );
 };
 
-// Staff View Modal Component
 interface StaffViewModalProps {
   staff: Staff;
   onClose: () => void;
