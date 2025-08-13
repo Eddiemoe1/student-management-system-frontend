@@ -12,6 +12,8 @@ const mockStats = {
     { id: '1', studentName: 'Ednah Moraa', subjectName: 'BCS 374', marks: 85, totalMarks: 100, grade: 'A' },
     { id: '2', studentName: 'Jane Catherine', subjectName: 'BCS 367', marks: 78, totalMarks: 100, grade: 'B' },
     { id: '3', studentName: 'Lydia Rose', subjectName: 'BCS 321', marks: 92, totalMarks: 100, grade: 'A' },
+    { id: '4', studentName: 'Due key', subjectName: 'BCS 324', marks: 88, totalMarks: 100, grade: 'A' },
+    { id: '5', studentName: 'Mary Jane', subjectName: 'BCS 367', marks: 75, totalMarks: 100, grade: 'B' },
   ],
 };
 
