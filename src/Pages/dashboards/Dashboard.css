@@ -34,7 +34,7 @@
 
 @media (min-width: 768px) {
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 2fr);
   }
 }
 
@@ -50,6 +50,17 @@
 
 @media (min-width: 768px) {
   .lecturer-stats, .student-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.stats-grid-three {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .stats-grid-three {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -462,12 +473,12 @@
   transform: translateY(-4px); 
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
   border-color: rgb(2, 141, 97);
-  background-color: rgba(2, 141, 97, 0.05);
+  background-color: rgba(245, 249, 248, 0.05);
 }
 
 .dashboard-card:hover .card-title {
   color: rgb(2, 141, 97); 
-}
+  font-weight: 600;}
 
 .dashboard-greeting {
   margin-bottom: 1rem;
@@ -480,7 +491,7 @@
 
 .greeting-title {
   font-size: 2rem;
-  font-weight: 200;
+  font-weight: 600;
   color: #1a1a1a;
   margin: 0;
   line-height: 1.2;

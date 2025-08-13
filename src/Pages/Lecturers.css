@@ -297,7 +297,6 @@
 .action-btn {
   width: 32px;
   height: 32px;
-  border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -305,11 +304,10 @@
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  background-color: transparent;
 }
 
 .action-btn.edit {
-  color: #166534;
+  background-color: #166534;
 }
 
 .action-btn.edit:hover {
@@ -325,11 +323,11 @@
 }
 
 .action-btn.delete {
-  color: #dc2626;
+  background-color: #b37575;
 }
 
 .action-btn.delete:hover {
-  color: #dc2626;
+  background-color: #b91c1c;
 }
 
 .modal-overlay {

@@ -51,13 +51,6 @@ export const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
-    return 'Good evening';
-  };
-
   const getUserName = () => {
     if (!user) return '';
     return user.firstName || user.email?.split('@')[0] || '';
@@ -158,16 +151,6 @@ export const Layout: React.FC = () => {
 
         <main className="page-content">
           <div className="content-container">
-            {/* Greeting Card */}
-            <div className="greeting-card">
-              <h1 className="greeting-title">
-                {getGreeting()}, {getUserName()}
-              </h1>
-              <p className="greeting-subtext">
-                Welcome back to your {normalizedRole} dashboard
-              </p>
-            </div>
-
             <Outlet />
           </div>
         </main>

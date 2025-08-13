@@ -12,6 +12,12 @@
   display: flex;
   z-index: 40;
 }
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  margin-left: 0; 
+}
 
 .mobile-sidebar-backdrop {
   position: fixed;
@@ -183,7 +189,7 @@ font-size:x-large;
   position: relative;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  left: 1rem;
+  margin-left: 0;
   font-size: xx-large;
   line-height: 1.75rem;
   font-weight: 600;
@@ -193,7 +199,7 @@ font-size:x-large;
   display: row;
   height: 2rem;
   width: 2rem;
-margin-left: 0.5rem;
+margin-left: 0;
 }
 
 @media (min-width: 1024px) {
