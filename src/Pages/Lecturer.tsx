@@ -442,6 +442,7 @@ const LectureFormModal: React.FC<LectureFormModalProps> = ({ lecture, onClose, o
             </div>
           </div>
           
+          
           <div className="form-grid">
             <div className="form-group">
               <label>Date</label>
@@ -461,7 +462,7 @@ const LectureFormModal: React.FC<LectureFormModalProps> = ({ lecture, onClose, o
                 onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
               />
             </div>
-            
+
             <div className="form-group">
               <label>End Time</label>
               <input
