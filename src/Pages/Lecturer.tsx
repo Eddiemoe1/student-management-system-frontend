@@ -99,6 +99,7 @@ export const Lectures: React.FC = () => {
           matchesDate = lectureDate >= weekStart.toISOString().split('T')[0] && 
                       lectureDate <= weekEnd.toISOString().split('T')[0];
           break;
+
         case 'this_month':
           const now = new Date();
           const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -460,6 +461,7 @@ const LectureFormModal: React.FC<LectureFormModalProps> = ({ lecture, onClose, o
                 onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
               />
             </div>
+            
             <div className="form-group">
               <label>End Time</label>
               <input
